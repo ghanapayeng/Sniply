@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notice — Sniply</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .status-page-wrapper {
+      min-height: calc(100vh - 140px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+    .status-card {
+      max-width: 520px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .status-icon-badge {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+    .status-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    .status-description {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/index.html" class="nav-brand">
+        <div class="brand-icon">✂</div>
+        <span>Snip<span style="color: var(--primary);">ly</span></span>
+      </a>
+      <div class="nav-actions">
+        <button id="theme-toggle-btn" class="theme-toggle-btn">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="status-page-wrapper">
+    <div class="status-card">
+      <div class="status-icon-badge">🚫</div>
+      <h1 class="status-title" id="error-title">Link Disabled</h1>
+      <p class="status-description" id="error-description">
+        This link has been deactivated by its owner or by administrative policy and is currently unavailable.
+      </p>
+      <div style="display: flex; gap: 0.75rem; justify-content: center;">
+        <a href="/index.html" class="btn btn-primary">Return to Sniply</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const reason = params.get("reason");
+      if (reason === "disabled") {
+        document.getElementById("error-title").textContent = "Link Disabled";
+        document.getElementById("error-description").textContent = "This short URL has been disabled by its owner and cannot be accessed.";
+      } else if (reason === "blocked") {
+        document.getElementById("error-title").textContent = "Access Prohibited";
+        document.getElementById("error-description").textContent = "The destination domain for this link has been flagged as unsafe or prohibited by platform security policies.";
+      }
+    });
+  </script>
+</body>
+</html>

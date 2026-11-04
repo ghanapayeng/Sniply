@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Sniply</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <style>
+    .admin-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .admin-tab-btn {
+      padding: 0.75rem 1.25rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .admin-tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/index.html" class="nav-brand">
+        <div class="brand-icon">✂</div>
+        <span>Snip<span style="color: var(--primary);">ly</span> <span class="badge badge-info" style="font-size: 0.7rem; vertical-align: middle;">ADMIN</span></span>
+      </a>
+      <div class="nav-actions">
+        <button id="theme-toggle-btn" class="theme-toggle-btn">🌙</button>
+        <div id="nav-auth-container" class="nav-auth-container"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-heading">Admin Suite</div>
+      <a href="/pages/admin.html" class="sidebar-nav-item active">
+        <span class="sidebar-icon">🛡️</span>
+        <span>Control Center</span>
+      </a>
+      <div class="sidebar-heading">User Views</div>
+      <a href="/pages/dashboard.html" class="sidebar-nav-item">
+        <span class="sidebar-icon">📊</span>
+        <span>My Dashboard</span>
+      </a>
+      <a href="/pages/urls.html" class="sidebar-nav-item">
+        <span class="sidebar-icon">🔗</span>
+        <span>My Links</span>
+      </a>
+    </aside>
+
+    <main class="dashboard-main">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Administration Console</h1>
+          <p class="page-subtitle">System-wide monitoring, user governance, domain blacklisting, and security audits.</p>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span>Total Users</span>
+            <span class="stat-icon">👥</span>
+          </div>
+          <div class="stat-value" id="stat-admin-users">0</div>
+          <div class="stat-change">Registered platform accounts</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span>Global URLs</span>
+            <span class="stat-icon">🌐</span>
+          </div>
+          <div class="stat-value" id="stat-admin-urls">0</div>
+          <div class="stat-change">All links (registered & anon)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span>Global Clicks</span>
+            <span class="stat-icon">⚡</span>
+          </div>
+          <div class="stat-value" id="stat-admin-clicks">0</div>
+          <div class="stat-change">Total lifetime redirects</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span>Active Links</span>
+            <span class="stat-icon">🟢</span>
+          </div>
+          <div class="stat-value" id="stat-admin-active">0</div>
+          <div class="stat-change">Unexpired and operational</div>
+        </div>
+      </div>
+
+      <!-- Admin Section Tabs -->
+      <div class="admin-tabs">
+        <button class="admin-tab-btn active" data-tab="tab-users">User Management</button>
+        <button class="admin-tab-btn" data-tab="tab-urls">Global URLs</button>
+        <button class="admin-tab-btn" data-tab="tab-domains">Prohibited Domains</button>
+        <button class="admin-tab-btn" data-tab="tab-logs">Security Audit Logs</button>
+      </div>
+
+      <!-- TAB 1: User Management -->
+      <div id="tab-users" class="admin-tab-content">
+        <div class="table-card">
+          <div class="table-header">
+            <h2 class="table-title">Registered Users</h2>
+          </div>
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Created</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-table-body">
+                <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading users...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Global URLs -->
+      <div id="tab-urls" class="admin-tab-content" style="display: none;">
+        <div class="table-card">
+          <div class="table-header">
+            <h2 class="table-title">All System URLs</h2>
+          </div>
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Short Link</th>
+                  <th>Original URL</th>
+                  <th>Clicks</th>
+                  <th>Type</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-urls-table-body">
+                <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading URLs...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: Prohibited Domains -->
+      <div id="tab-domains" class="admin-tab-content" style="display: none;">
+        <div class="table-card" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Add Prohibited Domain</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Domains added here (and all their subdomains) are immediately blocked from shortening platform-wide.</p>
+          <form id="add-domain-form" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <input type="text" id="new-domain-input" class="form-control" placeholder="Domain (e.g. evil-phishing.com)" required style="flex: 1; min-width: 220px;">
+            <input type="text" id="new-domain-reason" class="form-control" placeholder="Reason (e.g. Malware, Phishing)" style="flex: 1; min-width: 220px;">
+            <button type="submit" class="btn btn-primary" style="white-space: nowrap;">Add to Blacklist</button>
+          </form>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2 class="table-title">Currently Blacklisted Domains</h2>
+          </div>
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Reason</th>
+                  <th>Added Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-domains-table-body">
+                <tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading domains...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: Security Audit Logs -->
+      <div id="tab-logs" class="admin-tab-content" style="display: none;">
+        <div class="table-card">
+          <div class="table-header">
+            <h2 class="table-title">Audit Trail</h2>
+          </div>
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Action</th>
+                  <th>Actor</th>
+                  <th>Target Type</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody id="admin-logs-table-body">
+                <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading audit logs...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

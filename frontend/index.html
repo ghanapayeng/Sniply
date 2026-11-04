@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sniply — Make Your Links Shorter. Share Them Smarter.</title>
+  <meta name="description" content="Sniply is a modern, enterprise-grade URL shortener with real-time analytics, custom aliases, QR codes, and sub-millisecond redirection.">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <!-- Navigation Header -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/index.html" class="nav-brand">
+        <div class="brand-icon">✂</div>
+        <span>Snip<span style="color: var(--primary);">ly</span></span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#about" class="nav-link">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="theme-toggle-btn" class="theme-toggle-btn" title="Toggle theme">🌙</button>
+        <div id="nav-auth-container" class="nav-auth-container">
+          <a href="/pages/login.html" class="btn btn-ghost">Log In</a>
+          <a href="/pages/register.html" class="btn btn-primary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero Area (Screenshot Layout Reference) -->
+  <main class="hero-section">
+    <h1 class="hero-heading">Make Your Links Shorter. Share Them Smarter.</h1>
+    <p class="hero-description">
+      Sniply helps you create short links, manage your URLs, and understand how your audience interacts with them.
+    </p>
+
+    <!-- Shortener Input Card -->
+    <div class="shortener-card">
+      <form id="shortener-form">
+        <div class="shortener-form-row">
+          <div class="url-input-wrapper">
+            <span class="url-input-icon">🔗</span>
+            <input 
+              type="url" 
+              id="url-input" 
+              class="url-input" 
+              placeholder="Paste your long URL here (e.g. https://example.com/long-article...)" 
+              required
+              autocomplete="off"
+            >
+          </div>
+          <button type="submit" id="shorten-btn" class="btn btn-primary shorten-submit-btn">
+            <span>Shorten URL</span>
+          </button>
+        </div>
+
+        <!-- Advanced Options Toggle -->
+        <div class="options-toggle" id="options-toggle">
+          <span class="toggle-icon">▾</span>
+          <span>Advanced options (custom alias, expiration)</span>
+        </div>
+
+        <!-- Collapsible Advanced Options -->
+        <div class="advanced-options-panel collapsed" id="advanced-options">
+          <div class="form-group">
+            <label class="form-label" for="custom-alias-input">Custom Alias (optional)</label>
+            <input 
+              type="text" 
+              id="custom-alias-input" 
+              class="form-control" 
+              placeholder="e.g. summer-sale"
+              disabled
+            >
+            <small id="alias-auth-notice" style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-top: 4px;">
+              <a href="/pages/login.html">Sign in</a> to enable custom aliases.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="expiry-select">Link Expiration</label>
+            <select id="expiry-select" class="form-control">
+              <option value="30" selected>30 Days (Default)</option>
+              <option value="1">1 Day</option>
+              <option value="7">7 Days</option>
+              <option value="90">90 Days</option>
+            </select>
+          </div>
+        </div>
+      </form>
+
+      <!-- Shortened Result Card -->
+      <div id="result-box" class="result-box">
+        <div class="result-header">
+          <span class="result-title">🎉 Your shortened link is ready!</span>
+          <span id="expiry-note" style="font-size: 0.85rem; color: var(--text-muted);"></span>
+        </div>
+
+        <div class="result-content">
+          <a id="short-link" href="#" target="_blank" rel="noopener noreferrer" class="short-link-display"></a>
+          <div class="result-actions">
+            <button id="copy-btn" class="btn btn-outline btn-sm">Copy Link</button>
+            <a id="open-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Visit Link ↗</a>
+          </div>
+        </div>
+
+        <!-- QR Code Row -->
+        <div class="qr-preview-wrapper">
+          <img id="qr-code-img" class="qr-preview-img" alt="QR Code" src="">
+          <div>
+            <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 4px;">Share via QR Code</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Scan to open on any mobile device or download high-res image.</p>
+            <a id="download-qr-btn" href="#" download="sniply-qr.png" class="btn btn-outline btn-sm">Download QR Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Features Grid Section -->
+  <section id="features" class="features-section">
+    <h2 class="section-title">Built for speed, simplicity, and scale</h2>
+    <p class="section-subtitle">Everything you need to optimize and track your links in one unified platform.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-box">⚡</div>
+        <h3 class="feature-title">Lightning-Fast Redirects</h3>
+        <p class="feature-desc">Sub-millisecond latency backed by high-throughput Redis caching and connection pooling.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">📊</div>
+        <h3 class="feature-title">Real-Time Analytics</h3>
+        <p class="feature-desc">Monitor total clicks, unique visitors, devices, operating systems, and referrer channels accurately.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">🏷️</div>
+        <h3 class="feature-title">Custom Branded Aliases</h3>
+        <p class="feature-desc">Create memorable, readable custom links that boost trust and click-through rates.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">🛡️</div>
+        <h3 class="feature-title">Enterprise Security</h3>
+        <p class="feature-desc">Multi-layer SSRF defense, automated phishing domain blacklisting, rate limiting, and visitor privacy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="about">
+    <div class="footer-container">
+      <div class="footer-text">
+        © 2026 <strong>Sniply</strong> — Production-ready URL shortener.
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">Home</a>
+        <a href="/pages/dashboard.html">Dashboard</a>
+        <a href="/pages/login.html">Sign In</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Sniply</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/index.html" class="nav-brand">
+        <div class="brand-icon">✂</div>
+        <span>Snip<span style="color: var(--primary);">ly</span></span>
+      </a>
+      <div class="nav-actions">
+        <button id="theme-toggle-btn" class="theme-toggle-btn">🌙</button>
+        <div id="nav-auth-container" class="nav-auth-container"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-heading">Main</div>
+      <a href="/pages/dashboard.html" class="sidebar-nav-item active">
+        <span class="sidebar-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/pages/urls.html" class="sidebar-nav-item">
+        <span class="sidebar-icon">🔗</span>
+        <span>My Links</span>
+      </a>
+
+      <div class="sidebar-heading">Account</div>
+      <a href="/pages/settings.html" class="sidebar-nav-item">
+        <span class="sidebar-icon">⚙️</span>
+        <span>Settings</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-subtitle">Track your overall link performance and audience engagement.</p>
+        </div>
+        <a href="/pages/urls.html" class="btn btn-outline btn-sm">Manage All Links →</a>
+      </div>
+
+      <!-- Quick Shorten Bar -->
+      <div class="dashboard-shorten-panel">
+        <form id="dashboard-shorten-form" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <input 
+            type="url" 
+            id="dash-url-input" 
+            class="form-control" 
+            placeholder="Paste a link to shorten it quickly..." 
+            style="flex: 2; min-width: 260px;" 
+            required
+          >
+          <input 
+            type="text" 
+            id="dash-alias-input" 
+            class="form-control" 
+            placeholder="Custom alias (optional)" 
+            style="flex: 1; min-width: 180px;"
+          >
+          <button type="submit" id="dash-shorten-btn" class="btn btn-primary" style="white-space: nowrap;">
+            Shorten
+          </button>
+        </form>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span>Total Links</span>
+            <span class="stat-icon">🔗</span>
+          </div>
+          <div class="stat-value" id="stat-total-links">0</div>
+          <div class="stat-change">Short links created</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span>Total Clicks</span>
+            <span class="stat-icon">📈</span>
+          </div>
+          <div class="stat-value" id="stat-total-clicks">0</div>
+          <div class="stat-change">All-time redirects</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span>Active Links</span>
+            <span class="stat-icon">🟢</span>
+          </div>
+          <div class="stat-value" id="stat-active-links">0</div>
+          <div class="stat-change">Currently accessible</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span>Expired Links</span>
+            <span class="stat-icon">⌛</span>
+          </div>
+          <div class="stat-value" id="stat-expired-links">0</div>
+          <div class="stat-change">Past expiration date</div>
+        </div>
+      </div>
+
+      <!-- Clicks Trend Chart -->
+      <div class="chart-card" style="margin-bottom: 2rem;">
+        <div class="chart-header">
+          <div>
+            <h2 class="chart-title">Click Activity (Last 14 Days)</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Real-time aggregated redirects across all your links</p>
+          </div>
+        </div>
+        <div class="chart-canvas-wrapper">
+          <canvas id="clicks-trend-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Recent Links Table -->
+      <div class="table-card">
+        <div class="table-header">
+          <h2 class="table-title">Recently Created Links</h2>
+          <a href="/pages/urls.html" class="btn btn-outline btn-sm">View All Links</a>
+        </div>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Title / Destination</th>
+                <th>Short Link</th>
+                <th>Clicks</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="recent-links-table-body">
+              <tr>
+                <td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-muted);">Loading links...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

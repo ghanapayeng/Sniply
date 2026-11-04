@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>URL Shortener</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 60px auto; padding: 0 20px; color: #1a1a1a; }
+  h1 { font-size: 1.6rem; }
+  input, button { font-size: 1rem; padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
+  input[type=text], input[type=password] { width: 100%; box-sizing: border-box; margin-bottom: 10px; }
+  .row { display: flex; gap: 10px; }
+  .row input { flex: 1; }
+  button { background: #2563eb; color: white; border: none; cursor: pointer; }
+  button:hover { background: #1d4ed8; }
+  #result { margin-top: 20px; padding: 16px; background: #f3f4f6; border-radius: 10px; display: none; }
+  #result a { font-weight: 600; }
+  #result img { display: block; margin-top: 10px; }
+  .error { color: #dc2626; margin-top: 10px; }
+  details { margin-top: 10px; }
+  label { font-size: 0.85rem; color: #555; }
+</style>
+</head>
+<body>
+  <h1>🔗 URL Shortener</h1>
+  <input type="text" id="longUrl" placeholder="https://example.com/very-long-path-to-article">
+
+  <details>
+    <summary>Custom alias, expiration, password (optional)</summary>
+    <label>Custom alias</label>
+    <input type="text" id="customAlias" placeholder="my-link">
+    <label>Expires in (days)</label>
+    <input type="text" id="expiresIn" placeholder="7">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="optional">
+  </details>
+
+  <button onclick="shorten()">Shorten</button>
+  <div class="error" id="error"></div>
+
+  <div id="result">
+    <div>Short URL: <a id="shortLink" href="#" target="_blank"></a></div>
+    <div id="expiryNote"></div>
+    <img id="qrImg" width="140" height="140">
+    <div><a id="analyticsLink" href="#">View analytics →</a></div>
+  </div>
+
+  <script>
+    async function shorten() {
+      const longUrl = document.getElementById('longUrl').value.trim();
+      const customAlias = document.getElementById('customAlias').value.trim();
+      const expiresIn = document.getElementById('expiresIn').value.trim();
+      const password = document.getElementById('password').value;
+      const errorEl = document.getElementById('error');
+      errorEl.textContent = '';
+
+      const body = { long_url: longUrl };
+      if (customAlias) body.custom_alias = customAlias;
+      if (expiresIn) body.expires_in_days = expiresIn;
+      if (password) body.password = password;
+
+      const res = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        errorEl.textContent = data.error || 'Something went wrong';
+        return;
+      }
+
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('shortLink').href = data.short_url;
+      document.getElementById('shortLink').textContent = data.short_url;
+      document.getElementById('expiryNote').textContent = data.expires_at ? `Expires: ${data.expires_at}` : '';
+      document.getElementById('qrImg').src = `/api/qr/${data.code}`;
+      document.getElementById('analyticsLink').href = `/api/analytics/${data.code}`;
+    }
+  </script>
+</body>
+</html>

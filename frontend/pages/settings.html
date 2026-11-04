@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Sniply</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/index.html" class="nav-brand">
+        <div class="brand-icon">✂</div>
+        <span>Snip<span style="color: var(--primary);">ly</span></span>
+      </a>
+      <div class="nav-actions">
+        <button id="theme-toggle-btn" class="theme-toggle-btn">🌙</button>
+        <div id="nav-auth-container" class="nav-auth-container"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-heading">Main</div>
+      <a href="/pages/dashboard.html" class="sidebar-nav-item">
+        <span class="sidebar-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/pages/urls.html" class="sidebar-nav-item">
+        <span class="sidebar-icon">🔗</span>
+        <span>My Links</span>
+      </a>
+      <div class="sidebar-heading">Account</div>
+      <a href="/pages/settings.html" class="sidebar-nav-item active">
+        <span class="sidebar-icon">⚙️</span>
+        <span>Settings</span>
+      </a>
+    </aside>
+
+    <main class="dashboard-main" style="max-width: 800px;">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Account Settings</h1>
+          <p class="page-subtitle">Manage your profile, security credentials, and developer API keys.</p>
+        </div>
+      </div>
+
+      <!-- Profile Overview Card -->
+      <div class="table-card" style="padding: 1.75rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem;">Profile Information</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" id="profile-username" class="form-control" readonly disabled>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="profile-email" class="form-control" readonly disabled>
+          </div>
+        </div>
+        <div style="display: flex; gap: 2rem; font-size: 0.9rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 1rem;">
+          <div>Role: <strong id="profile-role" style="color: var(--text-main);">USER</strong></div>
+          <div>Member since: <strong id="profile-joined" style="color: var(--text-main);">-</strong></div>
+        </div>
+      </div>
+
+      <!-- Password Change Card -->
+      <div class="table-card" style="padding: 1.75rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Change Password</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">Update your password regularly to keep your account secure.</p>
+        
+        <form id="password-change-form">
+          <div class="form-group">
+            <label class="form-label" for="old-password">Current Password</label>
+            <input type="password" id="old-password" class="form-control" required placeholder="••••••••">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="new-password">New Password</label>
+              <input type="password" id="new-password" class="form-control" required placeholder="••••••••">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="confirm-password">Confirm New Password</label>
+              <input type="password" id="confirm-password" class="form-control" required placeholder="••••••••">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-outline" style="margin-top: 0.5rem;">Update Password</button>
+        </form>
+      </div>
+
+      <!-- API Keys Card -->
+      <div class="table-card" style="padding: 1.75rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Developer API Keys</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">Use API keys to shorten and manage links programmatically from scripts and applications.</p>
+        
+        <div id="api-keys-list" style="margin-bottom: 1.5rem;">
+          <div style="color: var(--text-muted);">Loading API keys...</div>
+        </div>
+
+        <form id="create-api-key-form" style="display: flex; gap: 0.75rem;">
+          <input type="text" id="api-key-name" class="form-control" placeholder="Key name (e.g. My Website Bot)" required style="flex: 1;">
+          <button type="submit" class="btn btn-primary" style="white-space: nowrap;">Generate New Key</button>
+        </form>
+      </div>
+
+      <!-- Danger Zone: Delete Account -->
+      <div class="table-card" style="padding: 1.75rem; border-color: rgba(239, 68, 68, 0.4);">
+        <h2 style="font-size: 1.2rem; font-weight: 700; color: var(--danger); margin-bottom: 0.5rem;">Danger Zone</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Permanently remove your account and all shortened links. This cannot be undone.</p>
+        
+        <form id="delete-account-form" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <input type="password" id="delete-password" class="form-control" placeholder="Enter password to confirm deletion" required style="flex: 1; min-width: 240px;">
+          <button type="submit" class="btn btn-primary" style="background-color: var(--danger); border-color: var(--danger);">Delete My Account</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/settings.js"></script>
+</body>
+</html>
