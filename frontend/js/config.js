@@ -10,18 +10,17 @@ const AppConfig = (() => {
   const host = window.location.hostname;
   const isLocal = host === "localhost" || host === "127.0.0.1";
 
+  // Production live Render API endpoint
+  const productionApiOrigin = "https://sniply-api-go5h.onrender.com";
+
   // Production vs local defaults
   const defaultApiBase = isLocal
     ? "http://localhost:5000/api/v1"
-    : (window.location.origin.includes("onrender.com")
-        ? `${window.location.origin.replace("-web", "-api").replace("-client", "-api")}/api/v1`
-        : `${window.location.origin}/api/v1`);
+    : `${productionApiOrigin}/api/v1`;
 
   const defaultShortUrlBase = isLocal
     ? "http://localhost:5000"
-    : (window.location.origin.includes("onrender.com")
-        ? window.location.origin.replace("-web", "-api").replace("-client", "-api")
-        : window.location.origin);
+    : productionApiOrigin;
 
   return {
     API_BASE_URL: injected.API_BASE_URL || defaultApiBase,

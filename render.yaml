@@ -49,11 +49,11 @@ services:
       - key: REDIS_URL
         sync: false # Optional: Set to your Redis / Upstash Redis connection string
       - key: BASE_URL
-        value: https://sniply-api.onrender.com
+        value: https://sniply-api-go5h.onrender.com
       - key: FRONTEND_URL
         value: https://sniply-web.onrender.com
       - key: CORS_ALLOWED_ORIGINS
-        value: https://sniply-web.onrender.com,https://sniply-api.onrender.com
+        value: https://sniply-web.onrender.com,https://sniply-api-go5h.onrender.com
       - key: SESSION_COOKIE_SECURE
         value: "true"
       - key: SESSION_COOKIE_SAMESITE
