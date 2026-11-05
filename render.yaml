@@ -21,9 +21,6 @@ services:
         value: strict-origin-when-cross-origin
     routes:
       - type: rewrite
-        source: /pages/*
-        destination: /pages/*
-      - type: rewrite
         source: /*
         destination: /index.html
 
@@ -43,15 +40,11 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
-        sync: false # Set to your Neon PostgreSQL connection string in Render Dashboard
+        sync: false # Set to your Neon PostgreSQL pooled connection string
+      - key: DATABASE_URL_UNPOOLED
+        sync: false # Set to your Neon PostgreSQL unpooled connection string (used for migrations)
       - key: REDIS_URL
-        sync: false # Set to your Redis / Upstash Redis connection string
-      - key: RATELIMIT_STORAGE_URI
-        fromService:
-          type: web
-          name: sniply-api
-          property: host
-        # Or set to your Redis URL
+        sync: false # Optional: Set to your Redis / Upstash Redis connection string
       - key: BASE_URL
         value: https://sniply-api.onrender.com
       - key: FRONTEND_URL
