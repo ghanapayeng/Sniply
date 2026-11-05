@@ -5,7 +5,6 @@ services:
   - type: web
     name: sniply-web
     env: static
-    plan: free
     buildCommand: ""
     staticPublishPath: ./frontend
     pullRequestPreviewsEnabled: true
