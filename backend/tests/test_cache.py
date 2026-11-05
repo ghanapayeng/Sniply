@@ -64,3 +64,4 @@ def test_cache_graceful_fallback_when_redis_none():
         assert payload is None and model is None
     finally:
         ext.redis_client = original_client
+

@@ -40,3 +40,4 @@ class ClickEvent(db.Model):
             "country": self.country,
             "region": self.region,
         }
+

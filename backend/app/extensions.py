@@ -54,3 +54,4 @@ def init_redis(app):
 def get_redis():
     """Return active Redis client or None if unavailable."""
     return redis_client
+

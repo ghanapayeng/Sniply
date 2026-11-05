@@ -35,3 +35,4 @@ def register_auth_middleware(app: Flask):
                 g.current_user = user
                 g.session_token = None
                 return
+

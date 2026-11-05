@@ -49,3 +49,4 @@ class User(db.Model):
 
     def is_admin(self) -> bool:
         return self.role == "admin"
+

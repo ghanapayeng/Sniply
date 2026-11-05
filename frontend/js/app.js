@@ -157,3 +157,4 @@ function setupShortenerForm() {
 }
 
 window.initTheme = initTheme;
+

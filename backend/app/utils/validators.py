@@ -203,3 +203,4 @@ def validate_password(password: str) -> Tuple[bool, str]:
     if not any(c.isdigit() for c in password):
         return False, "Password must contain at least one number."
     return True, ""
+

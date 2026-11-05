@@ -110,3 +110,4 @@ def test_qr_code_generation(client):
     assert qr_res.status_code == 200
     assert qr_res.content_type == "image/png"
     assert len(qr_res.data) > 0
+

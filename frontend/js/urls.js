@@ -290,3 +290,4 @@ function openDeleteModal(code) {
 function closeModal(modalId) {
   document.getElementById(modalId)?.classList.remove("active");
 }
+

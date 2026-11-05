@@ -226,3 +226,4 @@ def view_audit_logs():
             "total_pages": pagination.pages,
         }
     )
+

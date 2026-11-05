@@ -121,3 +121,4 @@ def test_api_key_flow(client, user_headers):
     # Access with revoked key fails
     res_revoked = client.get("/api/v1/auth/me", headers={"X-API-Key": raw_api_key})
     assert res_revoked.status_code == 401
+

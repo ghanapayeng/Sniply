@@ -79,3 +79,4 @@ def test_admin_authorization(client, user_headers):
     res = client.get("/api/v1/admin/overview", headers=user_headers)
     assert res.status_code == 403
     assert res.get_json()["code"] == "FORBIDDEN"
+

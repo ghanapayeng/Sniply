@@ -36,3 +36,4 @@ def register_security_headers(app: Flask):
             response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
 
         return response
+

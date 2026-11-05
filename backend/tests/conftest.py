@@ -88,3 +88,4 @@ def user_headers(user_token):
 @pytest.fixture
 def admin_headers(admin_token):
     return {"Authorization": f"Bearer {admin_token}", "Content-Type": "application/json"}
+

@@ -72,3 +72,4 @@ class BlacklistService:
     @classmethod
     def list_domains(cls) -> List[BlacklistedDomain]:
         return BlacklistedDomain.query.order_by(BlacklistedDomain.created_at.desc()).all()
+

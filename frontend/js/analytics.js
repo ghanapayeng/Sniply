@@ -206,3 +206,4 @@ async function loadClicksStream(code, page = 1) {
     container.innerHTML = `<tr><td colspan="5" style="color: var(--danger); text-align: center;">Failed to load click stream.</td></tr>`;
   }
 }
+

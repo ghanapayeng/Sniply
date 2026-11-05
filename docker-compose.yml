@@ -72,3 +72,4 @@ services:
 volumes:
   sniply_postgres_data:
   sniply_redis_data:
+

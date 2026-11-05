@@ -65,3 +65,4 @@ class URL(db.Model):
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
             "short_url": short_url,
         }
+

@@ -13,3 +13,4 @@ def register_routes(app: Flask):
     app.register_blueprint(admin_bp)
     # The redirects blueprint captures /<short_code>, so register it last
     app.register_blueprint(redirects_bp)
+

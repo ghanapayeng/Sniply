@@ -241,3 +241,4 @@ async function loadAuditLogs() {
     container.innerHTML = `<tr><td colspan="5" style="color: var(--danger); text-align: center;">Failed to load audit logs.</td></tr>`;
   }
 }
+

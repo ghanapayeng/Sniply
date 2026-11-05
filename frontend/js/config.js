@@ -33,3 +33,4 @@ const AppConfig = (() => {
 
 // Export globally for all vanilla JS scripts
 window.AppConfig = AppConfig;
+

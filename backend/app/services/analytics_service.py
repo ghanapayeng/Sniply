@@ -226,3 +226,4 @@ class AnalyticsService:
             "per_page": pagination.per_page,
             "total_pages": pagination.pages,
         }
+

@@ -74,3 +74,4 @@ services:
         value: admin@sniply.io
       - key: ADMIN_BOOTSTRAP_PASSWORD
         sync: false # Configure in Render Environment Variables
+

@@ -35,3 +35,4 @@ def error_response(
     if errors is not None:
         payload["errors"] = errors
     return jsonify(payload), status_code
+

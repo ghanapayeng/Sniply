@@ -51,3 +51,4 @@ def test_analytics_user_isolation(client, user_headers):
     # User 2 cannot access user 1's URL analytics
     res_unauth = client.get(f"/api/v1/analytics/{code}", headers=user2_headers)
     assert res_unauth.status_code == 404
+

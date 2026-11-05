@@ -149,3 +149,4 @@ Stores one-time password recovery tokens.
 | `expires_at` | `TIMESTAMPTZ` | NOT NULL, INDEXED | Token expiration |
 | `used_at` | `TIMESTAMPTZ` | NULLABLE | Timestamp token was consumed |
 | `created_at` | `TIMESTAMPTZ` | NOT NULL, DEFAULT `NOW()` | Token generation timestamp |
+

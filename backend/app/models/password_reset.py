@@ -24,3 +24,4 @@ class PasswordResetToken(db.Model):
         now = datetime.now(timezone.utc)
         expires = self.expires_at if self.expires_at.tzinfo else self.expires_at.replace(tzinfo=timezone.utc)
         return now < expires
+

@@ -23,3 +23,4 @@ def admin_required(f):
             return error_response("Administrator privileges required.", status_code=403, code="FORBIDDEN")
         return f(*args, **kwargs)
     return decorated_function
+

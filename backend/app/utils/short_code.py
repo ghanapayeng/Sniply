@@ -17,3 +17,4 @@ def generate_session_token() -> str:
 def generate_api_key() -> str:
     """Generate an API key with standard prefix: snip_<random>"""
     return f"snip_{secrets.token_urlsafe(32)}"
+

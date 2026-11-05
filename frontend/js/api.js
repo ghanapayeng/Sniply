@@ -149,3 +149,4 @@ function escapeHtml(str) {
 window.ApiClient = ApiClient;
 window.showToast = showToast;
 window.escapeHtml = escapeHtml;
+
