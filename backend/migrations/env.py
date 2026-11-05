@@ -16,6 +16,12 @@ logger = logging.getLogger('alembic.env')
 
 
 def get_engine():
+    import os
+    unpooled = os.getenv("DATABASE_URL_UNPOOLED")
+    if unpooled:
+        from backend.app.config import normalize_database_url
+        from sqlalchemy import create_engine
+        return create_engine(normalize_database_url(unpooled))
     try:
         # this works with Flask-SQLAlchemy<3 and Alchemical
         return current_app.extensions['migrate'].db.get_engine()

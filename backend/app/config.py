@@ -17,8 +17,8 @@ def normalize_database_url(url: str | None) -> str:
 class BaseConfig:
     SECRET_KEY = os.getenv("SECRET_KEY", "sniply-dev-secret-key-change-in-production-389104")
     
-    # Database
-    DATABASE_URL = os.getenv("DATABASE_URL")
+    # Database - Prefer pooled connection for web application traffic, fallback to DATABASE_URL
+    DATABASE_URL = os.getenv("DATABASE_URL_POOLED") or os.getenv("DATABASE_URL")
     SQLALCHEMY_DATABASE_URI = normalize_database_url(DATABASE_URL)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
