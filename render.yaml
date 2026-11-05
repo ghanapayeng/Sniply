@@ -36,6 +36,8 @@ services:
     envVars:
       - key: FLASK_ENV
         value: production
+      - key: PYTHONPATH
+        value: .:/opt/render/project/src
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
