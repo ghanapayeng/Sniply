@@ -7,7 +7,7 @@ from backend.app.models.user import User
 from backend.app.models.url import URL
 from backend.app.models.audit_log import AuditLog
 from backend.app.services.blacklist_service import BlacklistService
-from backend.app.services.url_service import URLService
+from backend.app.services.url_service import URLService, get_effective_base_url
 from backend.app.services.security_service import SecurityService
 from backend.app.utils.responses import success_response, error_response
 from backend.app.utils.decorators import admin_required
@@ -127,7 +127,7 @@ def list_all_urls():
     pagination = query.order_by(desc(URL.created_at)).paginate(
         page=page, per_page=per_page, error_out=False
     )
-    base_url = current_app.config.get("BASE_URL", "")
+    base_url = get_effective_base_url()
 
     return success_response(
         data={

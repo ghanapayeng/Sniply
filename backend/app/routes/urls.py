@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from flask import Blueprint, request, g, current_app, send_file
 import qrcode
 from backend.app.extensions import limiter
-from backend.app.services.url_service import URLService
+from backend.app.services.url_service import URLService, get_effective_base_url
 from backend.app.models.url import URL
 from backend.app.utils.responses import success_response, error_response
 from backend.app.utils.decorators import login_required
@@ -63,7 +63,7 @@ def create_url():
     if err:
         return error_response(err, status_code=400, code="URL_CREATION_FAILED")
 
-    base_url = current_app.config.get("BASE_URL", "")
+    base_url = get_effective_base_url()
     return success_response(
         data=url_obj.to_dict(base_url=base_url),
         message="Short URL created successfully.",
@@ -109,7 +109,7 @@ def get_qr_code(short_code):
     if not url_obj:
         return error_response("URL not found.", status_code=404)
 
-    base_url = current_app.config.get("BASE_URL", "").rstrip("/")
+    base_url = get_effective_base_url().rstrip("/")
     target_link = f"{base_url}/{url_obj.custom_alias or url_obj.short_code}"
 
     # Generate QR Code image
@@ -142,7 +142,7 @@ def get_url(short_code):
     if not url_obj:
         return error_response("URL not found or unauthorized.", status_code=404)
 
-    base_url = current_app.config.get("BASE_URL", "")
+    base_url = get_effective_base_url()
     return success_response(data=url_obj.to_dict(base_url=base_url))
 
 
@@ -185,7 +185,7 @@ def update_url(short_code):
     if not ok:
         return error_response(err, status_code=400)
 
-    base_url = current_app.config.get("BASE_URL", "")
+    base_url = get_effective_base_url()
     return success_response(
         data=url_obj.to_dict(base_url=base_url),
         message="URL updated successfully.",

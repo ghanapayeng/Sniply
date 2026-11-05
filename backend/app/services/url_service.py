@@ -1,7 +1,7 @@
 from datetime import datetime, timezone, timedelta
 from typing import Optional, Tuple, Dict, Any
 from sqlalchemy import or_, desc, asc
-from flask import current_app
+from flask import current_app, has_request_context, request
 from backend.app.extensions import db
 from backend.app.models.url import URL
 from backend.app.models.user import User
@@ -10,6 +10,19 @@ from backend.app.utils.short_code import generate_short_code
 from backend.app.services.blacklist_service import BlacklistService
 from backend.app.services.cache_service import CacheService
 from backend.app.services.security_service import SecurityService
+
+
+def get_effective_base_url() -> str:
+    """Return live request host URL if in request context, otherwise configured BASE_URL."""
+    if has_request_context():
+        try:
+            return request.host_url.rstrip("/")
+        except Exception:
+            pass
+    try:
+        return current_app.config.get("BASE_URL", "").rstrip("/")
+    except Exception:
+        return ""
 
 
 class URLService:
@@ -108,7 +121,7 @@ class URLService:
             remaining = int((final_expires_at - now).total_seconds())
             cls_ttl = max(1, min(cls_ttl, remaining))
 
-        base_url = current_app.config.get("BASE_URL", "")
+        base_url = get_effective_base_url()
         payload = new_url.to_dict(base_url=base_url)
         CacheService.set_url(short_code, payload, ttl=cls_ttl)
         if clean_alias:
@@ -152,7 +165,7 @@ class URLService:
             return None, None
 
         # 3. Cache valid active URL
-        base_url = current_app.config.get("BASE_URL", "")
+        base_url = get_effective_base_url()
         payload = url_obj.to_dict(base_url=base_url)
 
         if url_obj.is_accessible():
@@ -272,7 +285,7 @@ class URLService:
             query = query.order_by(desc(sort_col))
 
         pagination = query.paginate(page=page, per_page=per_page, error_out=False)
-        base_url = current_app.config.get("BASE_URL", "")
+        base_url = get_effective_base_url()
 
         return {
             "items": [u.to_dict(base_url=base_url) for u in pagination.items],
